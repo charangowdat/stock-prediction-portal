@@ -1,11 +1,17 @@
-import { useState } from 'react'
+import React from "react"
 
+import './assets/style.css'
+import Header from "./components/header.jsx"
+import Main from "./components/main.jsx"
+import Footer from "./components/footer.jsx"
 
 function App() {
 
-  return (
+  return (  
     <>
-      
+      <Header />
+      <Main/>
+      <Footer/>
     </>
   )
 }
