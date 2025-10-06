@@ -30,7 +30,6 @@ class UserSerializer(serializers.ModelSerializer):
   
   # def validate_password(self, value):
   #   import re
-
   #   if not re.search(r'[^A-Za-z0-9]', value):
   #     raise serializers.ValidationError("Password must contain at least one special character.")
   #   return value

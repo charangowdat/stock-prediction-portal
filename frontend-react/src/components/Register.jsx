@@ -50,8 +50,8 @@ function Register() {
               <small>{errors.password && <div className='text-danger'>&nbsp; {errors.password}</div>}</small>
               {success && <div className='alert alert-success mt-4' role="alert">Registration successful</div>}
               {loading ?
-              (<button type="submit" className='btn btn-info d-block mx-auto mt-4' placeholder='username' disabled><FontAwesomeIcon icon={faSpinner} spin />Please wait...</button>):
-              (<button type="submit" className='btn btn-info d-block mx-auto mt-4' placeholder='username'>Register</button>)
+              (<button type="submit" className='btn btn-info d-block mx-auto mt-4' disabled><FontAwesomeIcon icon={faSpinner} spin />Please wait...</button>):
+              (<button type="submit" className='btn btn-info d-block mx-auto mt-4'>Register</button>)
             }
               
             </form>
