@@ -2,6 +2,8 @@ import React,{useState} from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { useNavigate } from 'react-router-dom';
+import {toast} from 'react-toastify'
 
 function Register() {
   const [username, setUsername] = useState('')
@@ -10,6 +12,7 @@ function Register() {
   const [errors, setErrors] = useState({})
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
   const BASE_URL = 'http://127.0.0.1:8000/'
 
@@ -25,6 +28,8 @@ function Register() {
       console.log('User Created Successfully: ', response.data)
       setErrors({})
       setSuccess(true)
+      toast.success('Registration successfully!')
+      navigate('/login/')
     }catch(error){
       setSuccess(false)
       setErrors(error.response.data)
@@ -49,6 +54,8 @@ function Register() {
               <input type="password" className='form-control mt-3' required placeholder='Enter password' value={password} onChange={(e)=>setPassword(e.target.value)} />
               <small>{errors.password && <div className='text-danger'>&nbsp; {errors.password}</div>}</small>
               {success && <div className='alert alert-success mt-4' role="alert">Registration successful</div>}
+              
+              
               {loading ?
               (<button type="submit" className='btn btn-info d-block mx-auto mt-4' disabled><FontAwesomeIcon icon={faSpinner} spin />Please wait...</button>):
               (<button type="submit" className='btn btn-info d-block mx-auto mt-4'>Register</button>)

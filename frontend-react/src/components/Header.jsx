@@ -2,6 +2,7 @@ import {useContext} from 'react'
 import Button from './Button'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../AuthProvider'
+import { toast } from 'react-toastify'
 
 
 const header = () => {
@@ -15,6 +16,7 @@ const header = () => {
     localStorage.removeItem('refreshToken')
     setIsLoggedIn(false)
     navigate('/login')
+    toast.warning("You have logged out!")
   }
 
   return (
@@ -24,7 +26,10 @@ const header = () => {
 
         <div>
           {isLoggedIn ? (
-            <button className='btn btn-danger' onClick={handleLogout}>Logout</button>
+            <>
+              <Button text='Dashboard' class='btn-info' url='dashboard/' />&nbsp;
+              <button className='btn btn-danger' onClick={handleLogout}>Logout</button>
+            </>
           ):(
             <> 
             <Button text='Login' class='btn-outline-info' url='login/' />

@@ -1,9 +1,11 @@
 import React, {useState, useContext} from 'react'
-import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../AuthProvider'
+import axiosInstance from '../axiosInstance'
+import {toast} from 'react-toastify'
+
 
 function Login() {
 
@@ -12,27 +14,27 @@ function Login() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const navigate = useNavigate()
-  const {isLoggedIn, setIsLoggedIn} = useContext(AuthContext)
+  const {setIsLoggedIn} = useContext(AuthContext)
 
-  const BASE_URL = 'http://127.0.0.1:8000/'
 
   const handleLogin = async (e)=>{
-    e.preventDefault()
+    e.preventDefault();
     setLoading(true)
-    setError('')
     const userData = {
       username, password
     }
     console.log(userData)
     try{
-      const response = await axios.post(`${BASE_URL}api/v1/token/`, userData)
+      const response = await axiosInstance.post('/token/', userData)
       localStorage.setItem('accessToken', response.data.access)
       localStorage.setItem('refreshToken', response.data.refresh)
       console.log(response.data)
       setIsLoggedIn(true)
-      navigate('/')
+      toast.success('Logged in successfully!')
+      navigate('/dashboard/')
     }catch(error){
       console.log(error.response.data)
+      toast.error("Invalid username or password")
       setError("Invalid username or password")
     }finally{
       setLoading(false)
@@ -52,7 +54,7 @@ function Login() {
               {error && <div className='text-danger'>{error}</div>}
               {loading ?
               (<button type="submit" className='btn btn-info d-block mx-auto mt-4' disabled><FontAwesomeIcon icon={faSpinner} spin />Please wait...</button>):
-              (<button type="submit" className='btn btn-info d-block mx-auto mt-4'>Register</button>)
+              (<button type="submit" className='btn btn-info d-block mx-auto mt-4'>Login</button>)
             }
             
               
@@ -60,6 +62,7 @@ function Login() {
           </div>
         </div>
       </div>
+      
     </>
   )
 }
